@@ -6,9 +6,10 @@ public abstract class Enemy : LevelElement
     public Dice AttackDice { get; set; }
     public Dice DefenceDice { get; set; }
 
-    public Enemy(/*int posx, int posy, char entity, ConsoleColor entitycolor*/) //: base(posx, posy, entity, entitycolor)
+    public Enemy(int posx, int posy, char entity, ConsoleColor entitycolor, Dice attackdice, Dice defencedice) : base(posx, posy, entity, entitycolor)
     {
-
+        this.AttackDice = attackdice;
+        this.DefenceDice = defencedice; 
     }
 
     public abstract void Update();

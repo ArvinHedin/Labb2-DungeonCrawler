@@ -1,24 +1,28 @@
-﻿//using System.IO;
+﻿using System.IO;
 
-//class LevelData
-//{
-//    private List<LevelElement>? _elements;
-//    public List<LevelElement>? Elements { get { return _elements; } }
-//    List<LevelElement> levelElements = new List<LevelElement>(); 
+class LevelData
+{
+    private List<LevelElement>? _elements;
+    public List<LevelElement>? Elements { get { return _elements; } }
 
-//    String line;
-//    public void Load(string filename)
-//    {
-//        StreamReader sr = new StreamReader("C:\\Users\\Arvin\\source\\repos\\Labb 2\\Dungeon Crawler\\Levels\\Level1.txt");
-//        line = sr.ReadLine();
+    
+    public void Load(string filename)
+    {
+        _elements = new List<LevelElement>();
+        using (StreamReader sr = new StreamReader(filename))
+        {
+            while (sr.Peek() >= 0)
+            {
+                char c = (char)sr.Read();
+            }
+        }
+        Console.WriteLine();
 
-//        while (line != null)
-//        {
-//            Console.WriteLine(line);
-//            line = sr.ReadLine();
-//        }
+        //foreach (var element in Elements)
+        //{
+        //    element.Draw();
+        //}
 
-//        sr.Close();
-//        Console.ReadLine();
-//    }
-//}
+
+    }
+}

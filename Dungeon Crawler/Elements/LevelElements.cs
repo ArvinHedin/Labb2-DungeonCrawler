@@ -4,6 +4,8 @@
     public int PosY { get; set; }
     protected char Entity { get; set; }
     protected ConsoleColor EntityColor { get; set; }
+    
+    
 
     public LevelElement(int posx, int posy, char entity, ConsoleColor entitycolor) 
     {
@@ -15,6 +17,9 @@
 
     public virtual void Draw()
     {
-
+        Console.ForegroundColor = EntityColor; 
+        Console.SetCursorPosition(PosX, PosY);
+        Console.WriteLine(Entity);
+        Console.ResetColor();
     }
 }

@@ -1,7 +1,7 @@
 ﻿public class Wall : LevelElement
 {
 
-    public Wall(int x, int y) : base(x, y , '|', ConsoleColor.Gray)
+    public Wall(int posx, int posy) : base(posx, posy , '|', ConsoleColor.Gray)
     {
         
     }
