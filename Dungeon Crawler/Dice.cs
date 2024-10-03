@@ -1,5 +1,4 @@
-﻿
-public class Dice
+﻿public class Dice
 {
     public virtual int NumberOfDice { get; set; }
     public virtual int SidesPerDice { get; set; }

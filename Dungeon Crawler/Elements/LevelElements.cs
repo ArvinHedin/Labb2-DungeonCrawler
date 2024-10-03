@@ -1,9 +1,17 @@
 ﻿public abstract class LevelElement
 {
-    public abstract int PositionX { get; set; }
-    public abstract int PositionY { get; set; }
-    public abstract char Entity { get; set; }
-    public abstract ConsoleColor Color { get; set; }
+    public int PosX { get; set; }
+    public int PosY { get; set; }
+    protected char Entity { get; set; }
+    protected ConsoleColor EntityColor { get; set; }
+
+    public LevelElement(int posx, int posy, char entity, ConsoleColor entitycolor) 
+    {
+        PosX = posx;
+        PosY = posy;
+        Entity = entity;
+        EntityColor = entitycolor;
+    }
 
     public virtual void Draw()
     {

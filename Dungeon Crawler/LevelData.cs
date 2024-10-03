@@ -1,31 +1,24 @@
-﻿using System.IO;
+﻿//using System.IO;
 
-class LevelData
-{
-    private List<LevelElement>? _elements;
-    public List<LevelElement>? Elements { get { return _elements; } }
+//class LevelData
+//{
+//    private List<LevelElement>? _elements;
+//    public List<LevelElement>? Elements { get { return _elements; } }
+//    List<LevelElement> levelElements = new List<LevelElement>(); 
 
-    String line;
-    public void Load(string filename)
-    {
-        StreamReader sr = new StreamReader(filename);
-        line = sr.ReadLine();
+//    String line;
+//    public void Load(string filename)
+//    {
+//        StreamReader sr = new StreamReader("C:\\Users\\Arvin\\source\\repos\\Labb 2\\Dungeon Crawler\\Levels\\Level1.txt");
+//        line = sr.ReadLine();
 
-        while (line != null)
-        {
-            if(line == "g") { 
-                Goblin goblin = new Goblin();
-                _elements.Add(goblin);
-                
-            }
-            else if(line == "l") { Lurker lurker = new Lurker(); _elements.Add(lurker);}
-            else if(line == "|") { Wall wall = new Wall(); _elements.Add(wall); }
+//        while (line != null)
+//        {
+//            Console.WriteLine(line);
+//            line = sr.ReadLine();
+//        }
 
-            Console.WriteLine(line);
-            line = sr.ReadLine();
-        }
-
-        sr.Close();
-        Console.ReadLine();
-    }
-}
+//        sr.Close();
+//        Console.ReadLine();
+//    }
+//}
