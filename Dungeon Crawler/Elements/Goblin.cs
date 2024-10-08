@@ -6,9 +6,31 @@
         HP = 10;
     }
 
+    Random random = new Random();
+    
+
     public override void Update()
     {
-        throw new NotImplementedException();
+        int direction = random.Next(4);
+
+        switch (direction)
+        {
+            case 0:
+                PosX -= 1;
+                break;
+            case 1:
+                PosX += 1;
+                break;
+            case 2:
+                PosY -= 1;
+                break;
+            case 3:
+                PosY += 1;
+                break;
+
+        }
+
+        Console.SetCursorPosition(PosX, PosY);
     }
 
 }

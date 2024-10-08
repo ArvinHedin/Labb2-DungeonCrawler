@@ -2,6 +2,7 @@
 {
     public int PosX { get; set; }
     public int PosY { get; set; }
+    public Position Position { get; set; }
     protected char Entity { get; set; }
     protected ConsoleColor EntityColor { get; set; }
     
