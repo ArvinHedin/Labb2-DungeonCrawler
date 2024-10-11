@@ -1,16 +1,41 @@
-﻿public struct Position
+﻿using System.Diagnostics.CodeAnalysis;
+
+public struct Position
 {
-    public int PosX { get; set; }
-    public int PosY { get; set; }
+    public int X { get; set; }
+    public int Y { get; set; }
 
-    public Position(Position position) : this(position.PosX, position.PosY)
+    public Position(int x, int y)
     {
-
+        this.X = x;
+        this.Y = y;
     }
-    public Position(int posx, int posy) 
+    public Position(Position position) : this(position.X, position.Y)
     {
-        this.PosX = posx;
-        this.PosY = posy;
     }
 
+    public static Position operator +(Position a, Position b)
+    {
+        return new Position(a.X + b.X, a.Y + b.Y);
+    }
+    public bool Equals(Position other)
+    {
+        return X == other.X && Y == other.Y;
+    }
+    public override bool Equals(object obj)
+    {
+        return obj is Position other && Equals(other);
+    }
+    public override int GetHashCode()
+    {
+       return HashCode.Combine(X, Y);
+    }
+    public static bool operator ==(Position left, Position right)
+    {
+        return left.Equals(right);
+    }
+    public static bool operator !=(Position left, Position right)
+    {
+        return !(left == right);
+    }
 }

@@ -2,11 +2,18 @@
 
 class LevelData
 {
-    private static List<LevelElement>? _elements;
-    public static List<LevelElement>? Elements { get { return _elements; } }
+    private List<LevelElement>? _elements;
+    public List<LevelElement>? Elements { get { return _elements; } }
+    public List<RevealedWall> RevealedWalls { get; private set; }
+    public Player Player { get; private set; }
 
     public int x = 0;
     public int y = 0;
+   
+    public LevelData()
+    {
+        RevealedWalls = new List<RevealedWall>();
+    }
     public void Load(string filename)
     {
         _elements = new List<LevelElement>();
@@ -36,25 +43,22 @@ class LevelData
                 }
                 else if (c == '@')
                 {
-                    _elements.Add(new Player(x, y));
-                    int playerx = x;
-                    int playery = y;
+                    Player = new Player(x, y);
                 }
             }
+            
         }
     }
 
     public LevelElement GetLevelElementAt(Position position)
     {
-        
-
-        foreach (LevelElement element in Elements)
+        return Elements.FirstOrDefault(e => e.Position == position);
+    }
+    public void RevealWall(Wall wall)
+    {
+        if (!RevealedWalls.Any(rw => rw.Position == wall.Position))
         {
-            if (element.Position.Equals(position))
-            {
-                return element;
-            }
+            RevealedWalls.Add(new RevealedWall(wall.Position.X, wall.Position.Y));
         }
-        return null;
     }
 }

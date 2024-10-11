@@ -6,12 +6,19 @@ public abstract class Enemy : LevelElement
     public Dice AttackDice { get; set; }
     public Dice DefenceDice { get; set; }
 
-    public Enemy(int posx, int posy, char entity, ConsoleColor entitycolor, Dice attackdice, Dice defencedice) : base(posx, posy, entity, entitycolor)
+    public Enemy(int x, int y, char entity, ConsoleColor entitycolor, Dice attackdice, Dice defencedice) 
+        : base(x, y, entity, entitycolor)
     {
         this.AttackDice = attackdice;
-        this.DefenceDice = defencedice; 
+        this.DefenceDice = defencedice;
+        
     }
 
-    public abstract void Update();
+    public abstract Position GetNextMove(Position playerPosition);
+
+    public void UpdatePosition(Position newPosition)
+    {
+        Position = newPosition;
+    }
 
 }

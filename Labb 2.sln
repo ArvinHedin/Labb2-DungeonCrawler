@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35303.130
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dungeon Crawler", "Dungeon Crawler\Dungeon Crawler.csproj", "{050B662D-CA0A-4D30-8550-0129C6C86A78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dungeon Crawler", "Dungeon Crawler\Dungeon Crawler.csproj", "{050B662D-CA0A-4D30-8550-0129C6C86A78}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -3,16 +3,50 @@
 
     public string Name { get; set; } = "Entro";
     public int HP { get; set; } = 100;
-    protected Dice AttackDice { get; set; } = new Dice(2, 6, 2);
-    protected Dice DefenceDice { get; set; } = new Dice(2, 6, 0);
+    public Dice AttackDice { get; set; }
+    public Dice DefenceDice { get; set; }
+    public int VisionRange { get; set; } = 4;
 
-    public Player(int posx, int posy) : base(posx, posy, '@', ConsoleColor.DarkYellow)
+    public Player(int x, int y) : base(x, y, '@', ConsoleColor.DarkYellow)
     {
-        
+        AttackDice = new Dice(2, 6, 2);
+        DefenceDice = new Dice(2, 6, 0);
     }
 
-    public void Update()
+    public Position GetNextMove()
     {
+        Position newPosition = new Position(Position);
+        var key = Console.ReadKey(true).Key;
 
+            switch (key)
+            {
+                case ConsoleKey.W:
+                    newPosition.Y--;
+                    break;
+                case ConsoleKey.S:
+                    newPosition.Y++;
+                    break;
+                case ConsoleKey.A:
+                    newPosition.X--;
+                    break;
+                case ConsoleKey.D:
+                    newPosition.X++;
+                    break;
+            case ConsoleKey.Spacebar:
+                break;
+            }
+        return newPosition;
+    }
+
+    public override void Draw()
+    {
+        Console.ForegroundColor = EntityColor;
+        Console.Write(Entity);
+        Console.ResetColor();
+    }
+
+    public void UpdatePosition(Position newposition)
+    {
+        Position = newposition;
     }
 }

@@ -1,26 +1,24 @@
 ﻿public abstract class LevelElement
 {
-    public int PosX { get; set; }
-    public int PosY { get; set; }
-    public Position Position { get; set; }
     protected char Entity { get; set; }
     protected ConsoleColor EntityColor { get; set; }
-    
-    
+    public Position Position { get; set; }
+    private const int StatusRow = 3;
 
-    public LevelElement(int posx, int posy, char entity, ConsoleColor entitycolor) 
+
+    public LevelElement(int x, int y, char entity, ConsoleColor entitycolor) 
     {
-        PosX = posx;
-        PosY = posy;
+        Position = new Position(x, y);
         Entity = entity;
         EntityColor = entitycolor;
+        
     }
 
     public virtual void Draw()
     {
-        Console.ForegroundColor = EntityColor; 
-        Console.SetCursorPosition(PosX, PosY);
-        Console.WriteLine(Entity);
+        Console.ForegroundColor = EntityColor;
+        Console.SetCursorPosition(Position.X, Position.Y + StatusRow);
+        Console.Write(Entity);
         Console.ResetColor();
     }
 }

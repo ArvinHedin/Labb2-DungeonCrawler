@@ -1,36 +1,34 @@
 ﻿public class Goblin : Enemy
 {
-    public Goblin(int posx, int posy) : base(posx, posy, 'g', ConsoleColor.DarkGreen, new(1,6,3), new(1,6,1) )
+    public Goblin(int x, int y) : base(x, y, 'g', ConsoleColor.DarkGreen, new(1,6,3), new(1,6,1))
     {
         Name = "Goblin";
         HP = 10;
     }
 
     Random random = new Random();
-    
-
-    public override void Update()
+    public override Position GetNextMove(Position playerPosition)
     {
+        var newPosition = new Position(Position);
+        
         int direction = random.Next(4);
 
         switch (direction)
         {
             case 0:
-                PosX -= 1;
+                newPosition.X--;
                 break;
             case 1:
-                PosX += 1;
+                newPosition.X++;
                 break;
             case 2:
-                PosY -= 1;
+                newPosition.Y--;
                 break;
             case 3:
-                PosY += 1;
+                newPosition.Y++;
                 break;
-
         }
-
-        Console.SetCursorPosition(PosX, PosY);
+        return newPosition;
     }
 
 }
