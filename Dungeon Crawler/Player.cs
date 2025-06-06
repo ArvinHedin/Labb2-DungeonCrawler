@@ -13,7 +13,7 @@
         DefenceDice = new Dice(2, 6, 0);
     }
 
-    public Position GetNextMove()
+    public Position? GetNextMove()
     {
         Position newPosition = new Position(Position);
         var key = Console.ReadKey(true).Key;
@@ -32,6 +32,8 @@
                 case ConsoleKey.D:
                     newPosition.X++;
                     break;
+            case ConsoleKey.Escape:
+                return null;
             case ConsoleKey.Spacebar:
                 break;
             }

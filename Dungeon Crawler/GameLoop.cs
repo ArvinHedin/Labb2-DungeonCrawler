@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using MongoDB.Bson;
 
 internal class GameLoop
 {
@@ -7,6 +8,8 @@ internal class GameLoop
     private const int StatusRow = 3;
     private const int VisionRadius = 4;
     private int loopCounter = 0;
+    private bool isRunning = true;
+    public string PlayerName => _player.Name;
     public GameLoop(LevelData data)
     {
         this._levelData = data;
@@ -16,7 +19,7 @@ internal class GameLoop
     public void Run()
     {
         Console.CursorVisible = false;
-        while(true)
+        while(isRunning)
         {
             loopCounter++;
             Console.Clear();
@@ -25,16 +28,13 @@ internal class GameLoop
             MovePlayer();
             UpdateEnemies();
 
-            
-
-            
-
             if (_player.HP <= 0)
             {
                 Console.WriteLine("You were defeated!\nGAME OVER!");
                 Console.ResetColor();
                 break;
             }
+            
         }
     }
 
@@ -73,7 +73,17 @@ internal class GameLoop
     }
     private void MovePlayer()
     {
-        Position newPosition = _player.GetNextMove();
+        Position? newPositionNullable = _player.GetNextMove();
+
+        if (newPositionNullable == null)
+        {
+            Console.Clear();
+            Console.WriteLine("Escape pressed, ending game...");
+            isRunning = false;
+            return;
+        }
+
+        Position newPosition = newPositionNullable.Value;
         if (IsValidMove(newPosition) && !IsOccupiedByEnemy(newPosition))
         {
             _player.UpdatePosition(newPosition);
@@ -222,5 +232,75 @@ internal class GameLoop
     {
         Console.SetCursorPosition(0, 0);
         Console.WriteLine($"Player = {_player.Name}  -  HP = {_player.HP}/100  - Turn = {loopCounter} ");
+    }
+    public BsonDocument ToBson()
+    {
+        var enemies = _levelData.Elements
+            .Where(e => e is Enemy)
+            .Select(e => {
+                var enemy = (Enemy)e;
+                return new BsonDocument {
+            { "Type", enemy.GetType().Name },
+            { "X", enemy.Position.X },
+            { "Y", enemy.Position.Y },
+            { "HP", enemy.HP }
+                };
+            });
+
+        var walls = _levelData.RevealedWalls
+            .Select(w => new BsonDocument {
+            { "X", w.Position.X },
+            { "Y", w.Position.Y }
+            });
+
+        return new BsonDocument
+    {
+        { "PlayerName", _player.Name },
+        { "PlayerHP", _player.HP },
+        { "PlayerX", _player.Position.X },
+        { "PlayerY", _player.Position.Y },
+        { "Turn", loopCounter },
+        { "Enemies", new BsonArray(enemies) },
+        { "Walls", new BsonArray(walls) }
+    };
+    }
+
+    public void LoadFromBson(BsonDocument doc)
+    {
+        _player.Name = doc["PlayerName"].AsString;
+        _player.HP = doc["PlayerHP"].AsInt32;
+        _player.Position = new Position(doc["PlayerX"].AsInt32, doc["PlayerY"].AsInt32);
+        loopCounter = doc["Turn"].AsInt32;
+
+        _levelData.Elements.RemoveAll(e => e is Enemy);
+        foreach (var enemyDoc in doc["Enemies"].AsBsonArray)
+        {
+            var typeName = enemyDoc["Type"].AsString;
+            var x = enemyDoc["X"].AsInt32;
+            var y = enemyDoc["Y"].AsInt32;
+            var hp = enemyDoc["HP"].AsInt32;
+
+            Enemy? enemy = typeName switch
+            {
+                "Goblin" => new Goblin(x, y),
+                "Lurker" => new Lurker(x, y),
+                _ => null
+            };
+
+            if (enemy != null)
+            {
+                enemy.HP = hp;
+                _levelData.Elements.Add(enemy);
+            }
+        }
+
+
+
+        _levelData.RevealedWalls.Clear();
+        foreach (var wallDoc in doc["Walls"].AsBsonArray)
+        {
+            var pos = new Position(wallDoc["X"].AsInt32, wallDoc["Y"].AsInt32);
+            _levelData.RevealWall(new Wall(pos.X, pos.Y));
+        }
     }
 }
