@@ -9,7 +9,7 @@ public class MongoGameService
     public MongoGameService()
     {
         var client = new MongoClient("mongodb://localhost:27017");
-        var db = client.GetDatabase("ArvinHedin"); // Ditt namn som databas
+        var db = client.GetDatabase("ArvinHedin");
         _saves = db.GetCollection<BsonDocument>("GameSaves");
     }
 

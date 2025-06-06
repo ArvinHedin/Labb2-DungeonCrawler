@@ -24,7 +24,7 @@ if (Console.ReadLine()?.ToLower() == "y")
     }
 }
 
-// Nytt spel annars
+
 LevelData newLvl = new();
 newLvl.Load("C:\\Users\\Arvin\\source\\repos\\Labb 2\\Dungeon Crawler\\Levels\\Level1.txt");
 Console.Write("Enter player name: ");
